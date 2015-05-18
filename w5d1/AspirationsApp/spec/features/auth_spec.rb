@@ -19,37 +19,31 @@ feature "the signup process" do
     end
 
     it "validates presence of username" do
-      user = build(:nil_user)
+      user = build(:user, username: nil)
       sign_up_as(user)
 
       expect(page).to have_content "Username can't be blank"
     end
 
-    it "validates presence of password" do
-      user = build(:nil_password)
-      sign_up_as(user)
-
-      expect(page).to have_content "Password can't be blank"
-    end
-
     it "validates length of password" do
-      user = build(:nil_password)
+      user = build(:user, password: nil)
       visit new_user_url
       fill_in 'Username', with: user.username
       fill_in 'Password', with: "lol"
       click_on "Sign Up"
 
-      expect(page).to have_content "Password too short: minimum 6 letters"
+      expect(page).to have_content "Password is too short (minimum is 6 characters)"
     end
 
     it "validates username uniqueness" do
       user = create(:user)
-      sign_up_as(user)
-      click_on "Sign Out"
+      sign_in_as(user)
+      click_button "Sign Out"
       visit new_user_url
       fill_in 'Username', with: user.username
+      click_on "Sign Up"
 
-      expect(page).to have_content "Username already taken"
+      expect(page).to have_content "Username has already been taken"
     end
   end
 
