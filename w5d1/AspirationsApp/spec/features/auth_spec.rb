@@ -4,7 +4,7 @@ feature "the signup process" do
 
   it "has a new user page" do
     visit new_user_url
-    expect(page).to have_content "New User"
+    expect(page).to have_content "Sign Up"
     expect(page).to have_field "Username"
     expect(page).to have_field "Password"
   end
@@ -32,14 +32,24 @@ feature "the signup process" do
       expect(page).to have_content "Password can't be blank"
     end
 
-    it "validates presence of password" do
+    it "validates length of password" do
       user = build(:nil_password)
       visit new_user_url
-      fill_in 'username', with: user.username
-      fill_in 'password', with: "lol"
+      fill_in 'Username', with: user.username
+      fill_in 'Password', with: "lol"
       click_on "Sign Up"
 
       expect(page).to have_content "Password too short: minimum 6 letters"
+    end
+
+    it "validates username uniqueness" do
+      user = create(:user)
+      sign_up_as(user)
+      click_on "Sign Out"
+      visit new_user_url
+      fill_in 'Username', with: user.username
+
+      expect(page).to have_content "Username already taken"
     end
   end
 
