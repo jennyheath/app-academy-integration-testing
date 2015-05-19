@@ -1,0 +1,8 @@
+<h1>Edit Goal</h1>
+
+<%= render "shared/goal_form",
+  goal: @goal,
+  form_action: goal_url(@goal),
+  method: "patch",
+  button_text: "Update Goal"
+%>

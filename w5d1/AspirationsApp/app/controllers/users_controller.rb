@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :ensure_logged_in, only: [:show]
+
   def new
     @user = User.new
     render :new
@@ -13,6 +15,11 @@ class UsersController < ApplicationController
       flash.now[:errors] = @user.errors.full_messages
       render :new
     end
+  end
+
+  def show
+    @user = User.find(params[:id])
+    @goal = Goal.new
   end
 
   private

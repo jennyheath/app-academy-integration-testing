@@ -4,6 +4,7 @@ require 'spec_helper'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'support/auth_spec_helper'
+require 'support/goal_spec_helper'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -51,4 +52,5 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.include FactoryGirl::Syntax::Methods
   config.include AuthHelpers
+  config.include GoalHelpers
 end

@@ -1,1 +1,24 @@
 <h1>Your Goals</h1>
+
+<% if @user.id == current_user.id %>
+
+  <%= render "shared/goal_form",
+    goal: @goal,
+    form_action: goals_url,
+    method: "post",
+    button_text: "Submit Goal"
+  %>
+<% end %>
+<br>
+
+<h2>To Do List</h2>
+<% @user.goals.each do |goal| %>
+  <% if (goal.visibility == "n" && @user.id == current_user.id) || goal.visibility == "y" %>
+      <%= goal.body %><br>
+
+      <% if @user.id == current_user.id %>
+        <small> <%= link_to "Update Goal", edit_goal_url(goal) %> </small><br>
+        <%= button_to "Completed", goal_url(goal), method: :delete %>
+      <% end %>
+  <% end %>
+<% end %>

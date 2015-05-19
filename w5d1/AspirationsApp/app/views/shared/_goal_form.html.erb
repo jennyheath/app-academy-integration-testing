@@ -1,0 +1,32 @@
+<form action="<%= form_action %>" method="post">
+  <input type="hidden" name="_method" value="<%= method %>">
+
+  <%= auth_input %>
+
+  <label>Goal<br>
+    <textarea name="goal[body]"> <%= goal.body %> </textarea>
+  </label>
+  <br>
+
+  <label>
+    <input
+      type="radio"
+      name="goal[visibility]"
+      value="y"
+      <%= "checked" if goal.visibility == "y" %>>
+    Public
+  </label>
+  <br>
+
+  <label>
+    <input
+      type="radio"
+      name="goal[visibility]"
+      value="n"
+      <%= "checked" if goal.visibility == "n" %>>
+    Private
+  </label>
+  <br>
+
+  <input type="submit" value="<%= button_text %>">
+</form>
