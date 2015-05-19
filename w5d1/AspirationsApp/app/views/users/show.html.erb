@@ -1,5 +1,22 @@
 <h1>Your Goals</h1>
 
+<%#= link_to "Comment on this user", new_comment_url %>
+<form action="<%= comments_url %>" method="post">
+  <%= auth_input %>
+
+  <label>User Comment<br>
+    <textarea name="comment[body]"></textarea>
+    <br>
+  </label>
+  <input type="hidden" name="comment[commentable_type]" value="User">
+  <input type="hidden" name="comment[commentable_id]" value="<%= @user.id %>">
+  <input type="submit" value="Comment on user">
+</form>
+
+<% @user.comments.each do |comment| %>
+  <%= comment.body %>
+<% end %>
+
 <% if @user.id == current_user.id %>
 
   <%= render "shared/goal_form",
@@ -19,6 +36,24 @@
       <% if @user.id == current_user.id %>
         <small> <%= link_to "Update Goal", edit_goal_url(goal) %> </small><br>
         <%= button_to "Completed", goal_url(goal), method: :delete %>
+      <% end %>
+
+      <%#= link_to "Comment on this goal", new_comment_url %>
+      <form action="<%= comments_url %>" method="post">
+        <%= auth_input %>
+
+        <label>Goal Comment<br>
+          <textarea name="comment[body]"></textarea>
+          <br>
+        </label>
+        <input type="hidden" name="comment[commentable_type]" value="Goal">
+        <input type="hidden" name="comment[commentable_id]" value="<%= goal.id %>">
+
+        <input type="submit" value="Comment on goal">
+      </form>
+
+      <% goal.comments.each do |comment| %>
+        <%= comment.body %>
       <% end %>
   <% end %>
 <% end %>

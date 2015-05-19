@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   attr_reader :password
 
   has_many :goals
+  has_many :comments, as: :commentable
 
   def self.find_by_credentials(username, password)
     @user = User.find_by_username(username)
